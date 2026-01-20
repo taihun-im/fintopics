@@ -1,0 +1,443 @@
+
+\title[Investment Management]{Tiny Talk 1 (MGF738)} % Title of the presentation
+\author{Taihun Im}
+\institute{ State University of New York at Buffalo
+}
+\date{\LectureOne{}\hspace{2mm}{\LectureRoom{}}}
+%------------------------------------------ title page
+\begin{frame}[plain]
+   \titlepage
+\end{frame}
+
+%------------------------------------------ table of contents
+\begin{frame}
+\begin{small}
+   \frametitle{Contents}
+   \tableofcontents
+\end{small}
+\end{frame}
+
+
+\section{Large-Sample Distribution of OLS}
+
+\begin{frame}{Assumptions}[allowframebreaks]
+    \begin{itemize}
+        \item We assume that we have the following observations : 
+        \begin{align}
+            (y_i, \boldsymbol{x}_i), \quad i= 1,2,\cdots ,n\\
+            y_i \in \mathbb{R}, \quad \boldsymbol{x}_i = (x_{i1}, x_{i2}, \cdots, x_{ik})' \in \mathbb{R}^k \quad \forall i  \nonumber 
+        \end{align}
+    \end{itemize}
+
+    We impose the following assumptions 
+    \begin{enumerate}[A\arabic*.]
+                 \item Linearity \\
+                 For all $i$,
+        \begin{align*}
+            \boldsymbol{y}_i &= \boldsymbol{x}_i' \boldsymbol{\beta}  +\epsilon_i \\ 
+            & = \beta_1 x_{i1} +\beta_2 x_{i2} + \cdots + \beta_k x_{ik} + \epsilon_i
+        \end{align*}
+        \item Ergodic Stationary \\
+        The Stochastic process $(y_i, \boldsymbol{x}_i) \in \mathbb{R}^{k+1}$ is jointly stationary and ergodic 
+
+        
+    \end{enumerate}
+    
+
+
+\end{frame}
+
+
+\begin{frame}{Recap: Regressions}
+    
+\small
+    \begin{itemize}
+        \item As always the line is characterized by:
+                \begin{itemize}
+                    \item the intercept, which we call {\color{green}alpha}
+                    \item the slope, which we call {\color{blue}beta}
+                    \item because the line does not perfectly describe our data, we also have an error term for each observation, which we call \alert{epsilon's}
+                \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Regressions}
+
+    \begin{itemize}
+        \item There are infinitely many ways to draw the line
+        $$y_i = f(x_i) = \alpha + \beta x_i + \epsilon_i $$
+        \item we chose the one that minimizes $RSS = \sum_{i=0}^n \epsilon^2_i$
+        \item $\sum_{i=0}^n \epsilon^2_i =\sum_{i=0}^n (y_i - \alpha - \beta x_i)^2$
+        \item For simplicity, assume X and Y have mean of 0, hence $\alpha = 0$:
+        \item $\frac{dRSS}{d\beta} =\sum_{i=0}^n -2x_i(y_i -  \beta x_i)$
+        \item FOC: $0 = \frac{dRSS}{d\beta} \implies b = \frac{\sum_{i=0}^n x_i y_i}{\sum_{i=0}^n x_i^2} = \frac{\widehat{covar}(X,Y)}{\widehat{var}(X)}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Regression coefficient interpretation}
+\begin{itemize}
+    \item You estimate the following regression:
+$$log(volume) = \beta \times treated_{i, t} + ...$$
+    \item and find $b = 0.6$ 
+    \item You write: ``We find an increase in volume of 60\%  for treated...''.
+\pause    
+    \item Why is this misleading? Does it over- or underestimate the effect?
+\end{itemize}
+\pause
+
+$$E[log(vol)|treat=1] - E[log(vol)|treat=0] = log(vol_1) -  log(vol_0) = 0.6$$
+
+hence
+$$exp(log(vol_1) -  log(vol_0)) = exp(log(vol_1/vol_0)) = vol_1/vol_0 = exp(0.6)$$
+
+hence, more correct
+``We find an increase in volume of more than 80\% ($exp(0.6) - 1$) for treated...''
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Expectation of OLS estimate}
+
+\begin{itemize}
+    \item So far, we dont need any assumptions to derive b the so-called OLS estimate of $\beta$
+    \item But we want to know how b changes under repeated sampling: b is a random variable and has a distribution.
+    \item Assume A1 errors $\epsilon_i \sim \mathcal{N}(0, \sigma^2)$ are identical, independent Normal distributed (iid normal). (still assume $\alpha = 0$)
+    \item Assume A2  $\epsilon_i$ are $x_i$ are independent
+\end{itemize}
+
+\pause
+\small
+
+\begin{align*}
+        E[b] &= E\left[\frac{\sum_{i=0}^n x_i y_i}{\sum_{i=0}^n x_i^2} \right]\\
+             &= E\left[\frac{\sum_{i=0}^n x_i ( \beta x_i + \epsilon_i)}{\sum_{i=0}^n x_i^2} \right]\\ 
+             &= E\left[\frac{\sum_{i=0}^n x_i\beta x_i}{{\sum_{i=0}^n x_i^2}}\right] + E\left[\frac{\sum_{i=0}^n x_i\epsilon_i}{\sum_{i=0}^n x_i^2}\right] \\
+             &=  \beta + 0 (cause\ A2, E[x_i\epsilon_i] = E[x_i]E[\epsilon_i] = 0)
+\end{align*}
+
+%(see marno book p.10 and footnote 1)
+% Tophat Question: Why is the sum of residuals 0 if regression includes a constant?
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Variance of OLS estimate}
+
+\begin{itemize}
+    \item  For simplicity still assume $\alpha = 0$. Sill assume A1 and A2
+\end{itemize}
+
+\pause
+\small
+
+\begin{align*}
+        Var[b|X] &= Var\left[\frac{\sum_{i=0}^n x_i y_i}{\sum_{i=0}^n x_i^2} \right]\\
+             &= Var\left[\frac{\sum_{i=0}^n x_i ( \beta x_i + \epsilon_i)}{\sum_{i=0}^n x_i^2} \right]\\ 
+             &= Var\left[\frac{\sum_{i=0}^n x_i\beta x_i}{{\sum_{i=0}^n x_i^2}}\right] + Var\left[\frac{\sum_{i=0}^n x_i\epsilon_i}{\sum_{i=0}^n x_i^2}\right] \\
+             &= \frac{\sum_{i=0}^n Var\left[x_i\epsilon_i\right]}{\sum_{i=0}^n x_i^2} 
+             = \frac{\sum_{i=0}^n E\left[x_i^2\epsilon_i^2\right]}{(\sum_{i=0}^n x_i^2)^2}\\
+             &= \frac{\sigma^2}{\sum_{i=0}^n x_i^2}
+\end{align*}
+
+Tophat Question why sum of residuals is 0 if constant (see marno book p.10 and footnote 1)
+
+\end{frame}
+
+\subsection{Hypothesis testing}
+
+\begin{frame}
+\frametitle{Hypothesis testing}
+
+\begin{itemize}
+    \item A1 and A2 are called Gauss-Markov assumption and we get:
+$$ b \sim \mathcal{N}(\beta, \frac{\sigma^2}{\sum_{i=0}^n x_i^2})$$
+    \item This holds even in small samples.
+    \item But assumptions often are not true, hence (you) do asymptomatic properties.
+    \item See Tiny Talk 1
+    \item Make a Overleaf, Beamer presentation, dynamically generating data and plots using knitR (see example files for this lecture). Add your files to our Github repository.  Document what happens if you relax one assumption in the simulated data.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Hypothesis testing}
+
+\begin{tikzpicture}[scale=1.2, yscale=4.6]
+
+  \def\betas{0}
+  \def\sigmas{1}
+
+  \draw[->] (-4*\sigmas,0) -- (4*\sigmas,0) node[right] {};
+  \draw[->] (0,0) -- (0,{1/(\sigmas*sqrt(2*pi))+0.1}) node[above] {};
+
+  \draw[domain=-4*\sigmas:4*\sigmas,samples=200,smooth,thick]
+    plot (\x,{1/(\sigmas*sqrt(2*pi))*exp(-(\x-\betas)^2/(2*\sigmas*\sigmas))});
+
+  \draw[dashed] (\betas,0) -- (\betas,{1/(\sigmas*sqrt(2*pi))});
+  \node[below] at (\betas,0) {$\beta$};
+
+  \node at (1.5,{1/(\sigmas*sqrt(2*pi))+0.15}) {$b \sim \mathcal N(\beta,\frac{\sigma^2}{\sum_{i=0}^n x_i^2})$};
+
+  % Two standard deviations bar
+  \draw[dashed, thick]
+    ({\mus+2*\sigmas},0) -- ({\mus+2*\sigmas},
+    {1/(\sigmas*sqrt(2*pi))*exp(-2*2/2)});
+  \node[below] at ({\mus+2*\sigmas},0) {$\beta+2\sqrt{\frac{\sigma^2}{\sum_{i=0}^n x_i^2}}$};
+\end{tikzpicture}
+
+
+\pause
+
+\begin{itemize}
+    \item Null-hypothesis testing works like that:
+    \item estimate $b$
+    \item Assume the true $b$ is $\beta$ (the null-hypothesis)
+    \item Check where  $b$ is in the distribution
+    \item If $|b - \beta| >  2\sqrt{\frac{\sigma^2}{\sum_{i=0}^n x_i^2}}$, reject the null
+\end{itemize}
+
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Hypothesis testing: three issues}
+
+\begin{itemize}
+    \item Hypothesis testing is sizeless, see, e.g., \cite{Ziliak2008}
+    \item Hypothesis testing is a data property, we are interested in inferences.
+    \item Hypothesis testing (often) measures correlations, we are interested in causality.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Hypothesis testing is sizeless}
+
+\begin{itemize}
+    \item We say that if $|b - \beta| >  2\sqrt{\frac{\sigma^2}{\sum_{i=0}^n x_i^2}}$ we reject the null
+    \item But the variance of our estimator decreases in the number of observations
+    \item If we include more and more observations, we will reject any null!
+\pause
+    \item Remedy: cluster standard errors?
+    \item Remedy: focus on economic effect. Dont answer the philosopical ``whether'' question but answer the economic ``how much'' question
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Hypothesis testing is estimating data properties}
+You cant learn from cases: $1 = P(E|H) \ne P(H|E)$
+\small
+You study successful academics and learn that they all have E, you conclude that to be successful (H) you have to do E.
+\pause 
+No, because $1 = P(E|H) \ne P(H|E)$, what if 10 out of 100 non-successful academics also have E? Further, assume only 1 out of 100 academics is successful:
+
+\pause
+
+\begin{figure}
+\centering
+    \begin{tikzpicture}[x=0.30cm,y=0.30cm]
+    \foreach \y in {1,...,10}{
+        \foreach \x in {1,...,10}{
+            \filldraw[color=black, fill=black!0, very thick] (\x,\y) rectangle (1+\x,1+\y);}}
+        
+    % true postives    
+        \foreach \y in {1}{
+        \foreach \x in {1}{
+            \filldraw[color=black, fill=blue, very thick] (\x,\y) rectangle (1+\x,1+\y);}}
+            
+      
+     \foreach \y in {10}{
+        \foreach \x in {1,...,10}{
+            \filldraw[color=black, fill=green!50, very thick] (\x,\y) rectangle (1+\x,1+\y);}}
+    \end{tikzpicture}
+
+\label{fig:tree}
+\end{figure}
+
+Then $P(H|E) = \frac{1}{1+10} < 0.1$.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Hypothesis testing is estimating correlations}
+
+Note, this is still an association, you want to estimate $P(H|do(E))$
+See books by Judea Pearl, more about this in upcoming lectures.
+
+\end{frame}
+
+\subsection{Hypothesis testing simulation code}
+
+\begin{frame}{Simulation setup}
+We set a seed for reproducibility:
+<<setup, include=TRUE>>=
+set.seed(123)
+@
+and then define the simulated data:
+<<data-generation, echo=TRUE>>=
+
+n     <- 20
+beta0 <- 1
+beta1 <- 0.4
+sigma <- 1.5
+
+x   <- runif(n, -2, 2)
+eps <- rnorm(n, 0, sigma)
+
+y   <- beta0 + beta1 * x + eps
+
+fit <- lm(y ~ x)
+
+@
+
+We estimate:
+$$ y_i = \Sexpr{fit[["coefficients"]][1]} + \Sexpr{fit[["coefficients"]][2]} y_i + \epsilon_i$$
+with standard errors of \Sexpr{summary(fit)$coefficients[, "Std. Error"]}.
+
+\end{frame}
+
+\begin{frame}{Sample fit}
+
+<<scatter-plot, fig.height=3, fig.width=6>>=
+plot(x, y,
+     pch = 19,
+     xlab = "x",
+     ylab = "y",
+    )
+
+abline(a = beta0, b = beta1, lwd = 2, lty = 2)
+abline(fit, lwd = 2)
+
+legend("topleft",
+       legend = c("True line", "OLS fitted line"),
+       lty = c(2, 1),
+       lwd = 2,
+       bty = "n")
+@
+
+\end{frame}
+
+\begin{frame}{Sampling distribution of $\hat\beta_1$ (under null)}
+<<null>>=
+null <- 0
+@
+
+In null-hypothesis testing we normally assume that true coefficient is \Sexpr{null}, under the null, we know the theoretical distribution of the estimate is:
+\begin{align}
+\hat{\beta}_1 \mid x &\sim \mathcal{N}\left(0, \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar{x})^2}\right), \\
+\end{align}
+
+<<theory>>=
+Sxx  <- sum((x - mean(x))^2)
+sd_b1 <- sqrt(sigma^2 / Sxx)
+sd_b0 <- sqrt(sigma^2 * (1/n + mean(x)^2 / Sxx))
+@
+
+In other words, under the null, the estimator is normal distributed with mean 0 and standard deviation $\Sexpr{sd_b1}$ (compare with the empirical standard error of \Sexpr{summary(fit)$coefficients[, "Std. Error"][2]})
+
+\end{frame}
+
+\begin{frame}{Sampling distribution of $\hat\beta_1$ (empirical)}
+We approximate the conditional sampling distribution $\hat{\beta} \mid x$ using Monte Carlo simulation, holding $x$ fixed.
+
+<<monte-carlo>>=
+B <- 5000
+
+b0_hat <- numeric(B)
+b1_hat <- numeric(B)
+
+for (b in 1:B) {
+  eps_b <- rnorm(n, 0, sigma)
+  y_b   <- beta0 + beta1 * x + eps_b
+  fit_b <- lm(y_b ~ x)
+  b0_hat[b] <- coef(fit_b)[1]
+  b1_hat[b] <- coef(fit_b)[2]
+}
+@
+\end{frame}
+
+\begin{frame}{Small Sample, Sampling distribution of $\hat\beta_1$ (under null and empirical)}
+<<dist-slope, fig.height=4, fig.width=6>>=
+hist(b1_hat,
+     xlim   = c(-3, 3),
+     breaks = 50,
+     freq = FALSE,
+     main = expression(paste("Sampling distribution of ", hat(beta)[1])),
+     xlab = expression(hat(beta)[1]))
+
+grid_x <- seq(-3, 3, length.out = 500)
+lines(grid_x, dnorm(grid_x, null, sd_b1), lwd = 2)
+# abline(v = beta1, lwd = 2, lty = 2)
+abline(v = fit[["coefficients"]][2], lwd = 2, lty = 2)
+@
+\end{frame}
+
+\begin{frame}{Large Sample, distribution of $\hat\beta_1$ (under null and empirical)}
+<<data-generation-large, echo=FALSE>>=
+
+n     <- 200
+beta0 <- 1
+beta1 <- 0.4
+sigma <- 1.5
+
+x   <- runif(n, -2, 2)
+eps <- rnorm(n, 0, sigma)
+
+y   <- beta0 + beta1 * x + eps
+
+fit <- lm(y ~ x)
+
+# theory
+Sxx  <- sum((x - mean(x))^2)
+sd_b1 <- sqrt(sigma^2 / Sxx)
+sd_b0 <- sqrt(sigma^2 * (1/n + mean(x)^2 / Sxx))
+
+# empirics
+B <- 5000
+
+b0_hat <- numeric(B)
+b1_hat <- numeric(B)
+
+for (b in 1:B) {
+  eps_b <- rnorm(n, 0, sigma)
+  y_b   <- beta0 + beta1 * x + eps_b
+  fit_b <- lm(y_b ~ x)
+  b0_hat[b] <- coef(fit_b)[1]
+  b1_hat[b] <- coef(fit_b)[2]
+}
+
+@
+
+<<dist-slope-large, fig.height=4, fig.width=6>>=
+hist(b1_hat,
+     xlim   = c(-3, 3),
+     breaks = 50,
+     freq = FALSE,
+     main = expression(paste("Sampling distribution of ", hat(beta)[1])),
+     xlab = expression(hat(beta)[1]))
+
+grid_x <- seq(-3, 3, length.out = 500)
+lines(grid_x, dnorm(grid_x, null, sd_b1), lwd = 2)
+# abline(v = beta1, lwd = 2, lty = 2)
+abline(v = fit[["coefficients"]][2], lwd = 2, lty = 2)
+@
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Watch ``The Scientific Outlook in Financial Economics''}
+
+10:19
+
+https://www.youtube.com/watch?v=_KXyr4l6AG4
+
+\end{frame}
+
+

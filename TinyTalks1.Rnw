@@ -1,0 +1,26 @@
+
+\documentclass[t,11pt,notheorems]{beamer}\setbeameroption{hide notes} % handout; uncomment pgfpagesuselayout
+
+%
+% Night Mode:
+%
+% \mode<presentation> {
+%     \usetheme{default}
+    
+%     \usecolortheme[named=white]{structure} % White titles and such
+%     \setbeamercolor{normal text}{fg=white} % White text
+%     \setbeamercolor{background canvas}{bg=black} % Black background
+    
+%     \setbeamertemplate{itemize item}{\color{white}$\bullet$} % Comment this line for default bullet points (triangles)
+    
+%     \usepackage{helvet} % Helvetica Font 
+%     \renewcommand{\familydefault}{\sfdefault}
+    
+%     \setbeamertemplate{navigation symbols}{} % No navigation symbols
+%     \setbeamertemplate{footline} % Only page number at the bottom
+%      {\begin{minipage}{125mm} \vspace{-4 mm} \hfill \insertframenumber \end{minipage}}
+% }
+% END: Night mode
+\def\whichlecture{contents}
+
+\input{material1}

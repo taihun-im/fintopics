@@ -1,0 +1,119 @@
+\usepackage{pgf,pgfarrows,pgfnodes,pgfpages,pgfplots}
+\usepackage{amsmath,enumitem}
+\usepackage[utf8]{inputenc}
+
+\usepackage{natbib}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\makeatletter\def\Hy@xspace@end{}\makeatother %TEMP FIX FOR HYPERREF BUG!
+\pagestyle{navigation}              %AM:Other options: {empty} or {navigation}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e} % For \textsubscript in Beamer
+\usepackage{eurosym}
+\usepackage{multirow}
+\usepackage{ulem}\normalem %for double underline
+\usepackage{bez123,calc,ebezier,epic,eepic,graphicx,multiply,rotating} %AM: For the LaTeXPics
+\usepackage{tikz, verbatim} % For the Tikz drawings
+\usetikzlibrary{automata}
+\usetikzlibrary{shapes}
+\usepackage{media9}
+
+\usepackage{listings}
+\lstset{
+  breaklines=true, 
+  breakatwhitespace=true,  
+  columns=fullflexible,
+  showstringspaces=false,
+   frame=single,
+  language=R
+}
+
+%\usepackage[hmargin=2cm,vmargin=1cm]{geometry}
+%\renewcommand{\rmdefault}{bch} % change default font
+\usepackage[english]{babel}
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,fit,positioning,shapes.symbols,chains,calc,patterns}
+%\usetikzlibrary{arrows,shapes}
+\usepackage{setspace}
+\usepackage{color,xcolor} %AM: For changing font colours
+\usepackage{lipsum} % For next command:
+\setbeamertemplate{frametitle continuation}{(\insertcontinuationcount)} % For adjusted counters \allowframebreaks
+%\usefonttheme{structuresmallcapsserif}
+%\usefonttheme{serif}
+\setbeamersize{sidebar width left=0cm}%
+\setbeamertemplate{sidebar canvas left}{}%
+%\setbeamercolor{href}{fg=blue}
+% set the presentation theme and other presentation issues
+
+\usepackage{mathtools}
+\usepackage{animate}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+
+%% SPACING BETWEEN ITEMS FOR BEAMER
+\newlength{\wideitemsep}
+\setlength{\wideitemsep}{\itemsep}
+\addtolength{\wideitemsep}{0.35\baselineskip}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\wideitemsep}\olditem}
+%% NESTED LISTS
+\setbeamertemplate{itemize/enumerate subbody begin}{\vspace{0.5\baselineskip}}
+\setbeamertemplate{itemize/enumerate subbody end}{\vspace{0.5\baselineskip}}
+\setbeamertemplate{navigation symbols}{}
+%% MORE OPTIONS http://tex.stackexchange.com/questions/11168/change-bullet-style-formatting-in-beamer
+%====================================================
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\setlength{\extrarowheight}{4pt}
+\frenchspacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%====================================================
+\setbeamercolor{boxkleur} {bg=RSMlgrey, fg=RSMblue} %needed for regular beamerboxesrounded
+
+%====================================================
+
+\setbeamertemplate{footline}[frame number]
+
+\hypersetup{
+    pdftitle={Lecture slides for Investment Management ( State University of New York at Buffalo
+},
+    pdfauthor={Dominik Rosch},
+    pdfsubject={Lecture slides for Investment Management (State University of New York at Buffalo
+},
+    pdfkeywords={Investment Management,  State University of New York at Buffalo
+}
+}
+
+\setbeamertemplate{theorems}[numbered]
+\makeatletter
+    \ifbeamer@countsect
+      \newtheorem{theorem}{\translate{Theorem}}[section]
+    \else
+      \newtheorem{theorem}{\translate{Theorem}}
+    \fi
+    \newtheorem{lemma}{\translate{Lemma}}
+
+    \theoremstyle{definition}
+    \newtheorem{definition}{\translate{Definition}}
+
+\makeatother
+
+%====================================================
+\begin{document}
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt=#1{}{invisible}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }
+
+\input{\whichlecture}
+
+\begin{frame}
+\frametitle{References}
+\bibliographystyle{chicago}
+\bibliography{references.bib}
+\end{frame}
+
+\end{document}
+%====================================================
